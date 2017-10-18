@@ -44,38 +44,53 @@ public class Main {
          */
         
         // Addition maximaler Werte
-        System.out.println("2147483647 + 2147483647: " + (2147483647 + 2147483647)); // -2
-        System.out.println("1.797693e308 + 1.797693e308: " + (1.797693e308 + 1.797693e308)); // Infinity
+        int maxInt = Integer.MAX_VALUE;
+        double maxDouble = Double.MAX_VALUE;
+        
+        System.out.println(maxInt + " + " + maxInt + ": " + (maxInt + maxInt)); // -2
+        System.out.println(maxDouble + " + " + maxDouble + ": " + (maxDouble + maxDouble)); // Infinity
         System.out.println();
         
         // Multiplikation maximaler Werte
-        System.out.println("2147483647 * 2147483647: " + (2147483647 * 2147483647)); // 1
-        System.out.println("1.797693e308 * 1.797693e308: " + (1.797693e308 * 1.797693e308)); // Infinity
+        System.out.println(maxInt + " * " + maxInt + ": " + (maxInt * maxInt)); // 1
+        System.out.println(maxDouble + " * " + maxDouble + ": " + (maxDouble * maxDouble)); // Infinity
         System.out.println();
         
         // Positive Zahl geteilt durch 0
-        // System.out.println("7 / 0: " + (7 / 0));
-        /*
-         * Exception in thread "main" java.lang.ArithmeticException: / by zero
-         * at prog1aufg2c.Main.main(Main.java:24)
+        try {
+            System.out.println("7 / 0: " + (7 / 0));
+        } catch (ArithmeticException e) {
+            e.printStackTrace(System.out);
+        }
+        /* 
+         * java.lang.ArithmeticException: / by zero
+         * at prog1aufg2c.Main.main(Main.java:61)
          */
         System.out.println("7.0 / 0.0: " + (7.0 / 0.0)); // Infinity
         System.out.println();
         
         // Negative Zahl geteilt durch 0
-        //System.out.println("-7 / 0: " + (-7 / 0));
-        /*
-         * Exception in thread "main" java.lang.ArithmeticException: / by zero
-         * at prog1aufg2c.Main.main(Main.java:32)
+        try {
+            System.out.println("-7 / 0: " + (-7 / 0));
+        } catch (ArithmeticException e) { 
+            e.printStackTrace(System.out);
+        }
+        /* 
+         * java.lang.ArithmeticException: / by zero
+         * at prog1aufg2c.Main.main(Main.java:74)
          */
         System.out.println("-7.0 / 0.0: " + (-7.0 / 0.0)); // -Infinity
         System.out.println();
         
         // 0 geteilt durch 0
-        //System.out.println("0 / 0: " + (0 / 0));
+        try {
+            System.out.println("0 / 0: " + (0 / 0));
+        } catch (ArithmeticException e) {
+            e.printStackTrace(System.out);
+        }
         /*
-         * Exception in thread "main" java.lang.ArithmeticException: / by zero
-         * at prog1aufg2c.Main.main(Main.java:40)
+         * java.lang.ArithmeticException: / by zero
+         *  at prog1aufg2c.Main.main(Main.java:87)
          */
         System.out.println("0.0 / 0.0: " + (0.0 / 0.0)); // NaN (Not a Number)
         System.out.println();
