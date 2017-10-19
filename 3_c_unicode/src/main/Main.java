@@ -6,11 +6,11 @@ public class Main {
     
     public static void main(String[] args) {
         // Deklarieren der Variablen zum einlesen.
-        // Variablen fÃ¼r die ersten beiden Zeichen ('\\u')
+        // Variablen für die ersten beiden Zeichen ('\\u')
         int in1, in2;
-        // Variablen fÃ¼r die Hexzahl
+        // Variablen für die Hexzahl
         int code1, code2, code3, code4;
-        // Variable fï¿½r die letztendliche Dezimal Zahl
+        // Variable für die letztendliche Dezimal Zahl
         int code = 0;
         
         // Einlesen der Zeichen
@@ -33,14 +33,14 @@ public class Main {
             return;
         }
         
-        // Konvertieren des Zeichens in die zugehÃ¶rige Dezimalzahl bezogen auf die Stelle
+        // Konvertieren des Zeichens in die zugehörige Dezimalzahl bezogen auf die Stelle
         if (code1 >= '0' && code1 <= '9') {
         	/*
         	 * Zeichencode - Zeichencode des ersten Zeichens der Ansammlung ergibt die eigentliche Zahl,
         	 * bei den Buchstaben muss man das ganze dann noch um 10 erhÃ¶hen da A nicht 0 ist sondern "10".
         	 * code1 ist die 3te Stelle (0-index) damit 16^3 (4096) Wert und
         	 * muss deswegen mal 4096 genommen werden.
-        	 * Dies wird dann zum letzt endlichen code hinzugefÃ¼gt und
+        	 * Dies wird dann zum letzt endlichen code hinzugefüt und
         	 * anschlieÃŸend werden die weiteren Stellen addiert.
         	 */
             code += (code1 - '0') * 4096;
@@ -90,7 +90,7 @@ public class Main {
             return;
         }
         
-        // Ausgeben der dezimal Zahl und des jeweilig zugehÃ¶rigen Zeichens (Man beachte die Zeichenkodierung der Datei)
+        // Ausgeben der dezimal Zahl und des jeweilig zugehörigen Zeichens (Man beachte die Zeichenkodierung der Datei)
         System.out.printf("dez.: %03d, char: %c", code, (char) code);
         
     }
