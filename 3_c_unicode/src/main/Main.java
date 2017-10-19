@@ -8,7 +8,7 @@ public class Main {
         // Deklarieren der Variablen zum einlesen.
         // Variablen für die ersten beiden Zeichen ('\\u')
         int in1, in2;
-        // Variablen für die Hexzahl
+        // Variablen für die Hexadezimalzahl
         int code1, code2, code3, code4;
         // Variable für die letztendliche Dezimal Zahl
         int code = 0;
@@ -27,7 +27,7 @@ public class Main {
             return;
         }
         
-        // Falls die ersten beiden Zeichen nicht '\\u' sind, wird ein Fehler ausgeben und abbrechen
+        // Falls die ersten beiden Zeichen nicht '\\u' sind, wird ein Fehler ausgeben und abgebrochen
         if ( in1 != '\\' || in2 != 'u') {
             System.err.println("Invalid input!");
             return;
@@ -40,7 +40,7 @@ public class Main {
         	 * bei den Buchstaben muss man das ganze dann noch um 10 erhöhen da A nicht 0 ist sondern "10".
         	 * code1 ist die 3te Stelle (0-index) damit 16^3 (4096) Wert und
         	 * muss deswegen mal 4096 genommen werden.
-        	 * Dies wird dann zum letzt endlichen code hinzugefügt und
+        	 * Dies wird dann zum letztendlichen code hinzugefügt und
         	 * anschließend werden die weiteren Stellen addiert.
         	 */
             code += (code1 - '0') * 4096;
@@ -49,7 +49,7 @@ public class Main {
         } else if (code1 >= 'a' && code1 <= 'f') {
             code += (code1 - 'a' + 10) * 4096;
         } else {
-            // Falls es keine Hexzahl ist, Fehler ausgeben und abbrechen
+            // Falls es keine Hexadezimalzahl ist, Fehler ausgeben und abbrechen
             System.err.println("Invalid input, expected a hex number!");
             return;
         }
@@ -90,7 +90,7 @@ public class Main {
             return;
         }
         
-        // Ausgeben der dezimal Zahl und des jeweilig zugehörigen Zeichens (Man beachte die Zeichenkodierung der Datei)
+        // Ausgeben der dezimal Zahl und des jeweilige zugehörigen Zeichens (Man beachte die Zeichenkodierung der Datei)
         System.out.printf("dez.: %03d, char: %c", code, (char) code);
         
     }
