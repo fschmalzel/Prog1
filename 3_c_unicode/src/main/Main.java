@@ -10,7 +10,7 @@ public class Main {
         int in1, in2;
         // Variablen für die Hexzahl
         int code1, code2, code3, code4;
-        // Variable f�r die letztendliche Dezimal Zahl
+        // Variable für die letztendliche Dezimal Zahl
         int code = 0;
         
         // Einlesen der Zeichen
