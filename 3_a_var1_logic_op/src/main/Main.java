@@ -1,4 +1,4 @@
-package aufg3a;
+package main;
 
 public class Main {
     

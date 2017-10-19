@@ -5,121 +5,93 @@ import java.io.IOException;
 public class Main {
     
     public static void main(String[] args) {
+        // Deklarieren der Variablen zum einlesen.
+        // Variablen f√ºr die ersten beiden Zeichen ('\\u')
+        int in1, in2;
+        // Variablen f√ºr die Hexzahl
+        int code1, code2, code3, code4;
+        // Variable fÔøΩr die letztendliche Dezimal Zahl
+        int code = 0;
         
-        int input;
+        // Einlesen der Zeichen
         try {
-            input = System.in.read();
+            in1 = System.in.read();
+            in2 = System.in.read();
+            code1 = System.in.read();
+            code2 = System.in.read();
+            code3 = System.in.read();
+            code4 = System.in.read();
         } catch (IOException e) {
-            e.printStackTrace();
+            // Falls ein Fehler vorliegt, wird ein Fehler ausgegeben und das Programm beendet
+            System.err.println(e.getMessage());
             return;
         }
         
-        if (input != '\\') {
-            System.out.println("'\\' expected.");
+        // Falls die ersten beiden Zeichen nicht '\\u' sind, wird ein Fehler ausgeben und abbrechen
+        if ( in1 != '\\' || in2 != 'u') {
+            System.err.println("Invalid input!");
             return;
         }
         
-        try {
-            input = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        
-        if (input != 'u') {
-            System.out.println("'u' expected.");
-            return;
-        }
-        
-        int hex1, hex2, hex3, hex4;
-        try {
-            hex4 = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        // Kleinschreibung zu Groﬂschreibung konvertieren
-        if ('z' <= hex4 && hex4 >= 'a') {
-            hex4 -= 'a' - 'A';
-        }
-        
-        if ( !(hex4 >= '0' && hex4 <= '9' || hex4 >= 'A' && hex4 <= 'F') ) {
-            System.out.println("Expected a hexcode.");
-            return;
-        }
-        
-        try {
-            hex3 = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        // Kleinschreibung zu Groﬂschreibung konvertieren
-        if ('z' <= hex3 && hex3 >= 'a') {
-            hex3 -= 'a' - 'A';
-        }
-        
-        if ( !(hex3 >= '0' && hex3 <= '9' || hex3 >= 'A' && hex3 <= 'F') ) {
-            System.out.println("Expected a hexcode.");
-            return;
-        }
-        
-        try {
-            hex2 = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        // Kleinschreibung zu Groﬂschreibung konvertieren
-        if ('z' <= hex2 && hex2 >= 'a') {
-            hex2 -= 'a' - 'A';
-        }
-        
-        if ( !(hex2 >= '0' && hex2 <= '9' || hex2 >= 'A' && hex2 <= 'F') ) {
-            System.out.println("Expected a hexcode.");
-            return;
-        }
-        
-        try {
-            hex1 = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        // Kleinschreibung zu Groﬂschreibung konvertieren
-        if ('z' <= hex1 && hex1 >= 'a') {
-            hex1 -= 'a' - 'A';
-        }
-        
-        if ( !(hex1 >= '0' && hex1 <= '9' || hex1 >= 'A' && hex1 <= 'F') ) {
-            System.out.println("Expected a hexcode.");
-            return;
-        }
-        
-        hex1 = convert(hex1);
-        hex2 = convert(hex2);
-        hex3 = convert(hex3);
-        hex4 = convert(hex4);
-        
-        short code = (short) (hex4 * 4096 + hex3 * 256 + hex2 * 16 + hex1);
-        
-        System.out.printf("dez.: %03d, char: %c", code, (char) code);
-    }
-    
-    private static int convert(int num) {
-        int result;
-        if (num >= '0' && num <= '9') {
-            result = num - '0';
-        } else if (num >= 'A' && num <= 'Z') {
-            result = num - 'A' + 10;
+        // Konvertieren des Zeichens in die zugeh√∂rige Dezimalzahl bezogen auf die Stelle
+        if (code1 >= '0' && code1 <= '9') {
+        	/*
+        	 * Zeichencode - Zeichencode des ersten Zeichens der Ansammlung ergibt die eigentliche Zahl,
+        	 * bei den Buchstaben muss man das ganze dann noch um 10 erh√∂hen da A nicht 0 ist sondern "10".
+        	 * code1 ist die 3te Stelle (0-index) damit 16^3 (4096) Wert und
+        	 * muss deswegen mal 4096 genommen werden.
+        	 * Dies wird dann zum letzt endlichen code hinzugef√ºgt und
+        	 * anschlie√üend werden die weiteren Stellen addiert.
+        	 */
+            code += (code1 - '0') * 4096;
+        } else if (code1 >= 'A' && code1 <= 'F') {
+            code += (code1 - 'A' + 10) * 4096;
+        } else if (code1 >= 'a' && code1 <= 'f') {
+            code += (code1 - 'a' + 10) * 4096;
         } else {
-            result = 0;
+            // Falls es keine Hexzahl ist, Fehler ausgeben und abbrechen
+            System.err.println("Invalid input, expected a hex number!");
+            return;
         }
-        return result;
+        
+        // Analog zum vorherigen Codeblock
+        if (code2 >= '0' && code2 <= '9') {
+            code += (code2 - '0') * 256;
+        } else if (code2 >= 'A' && code2 <= 'F') {
+            code += (code2 - 'A' + 10) * 256;
+        } else if (code2 >= 'a' && code2 <= 'f') {
+            code += (code2 - 'a' + 10) * 256;
+        } else {
+            System.err.println("Invalid input, expected a hex number!");
+            return;
+        }
+        
+        // Analog zum vorherigen Codeblock
+        if (code3 >= '0' && code3 <= '9') {
+            code += (code3 - '0') * 16;
+        } else if (code3 >= 'A' && code3 <= 'F') {
+            code += (code3 - 'A' + 10) * 16;
+        } else if (code3 >= 'a' && code3 <= 'f') {
+            code += (code3 - 'a' + 10) * 16;
+        } else {
+            System.err.println("Invalid input, expected a hex number!");
+            return;
+        }
+        
+        // Analog zum vorherigen Codeblock
+        if (code4 >= '0' && code4 <= '9') {
+            code += code4 - '0';
+        } else if (code4 >= 'A' && code4 <= 'F') {
+            code += code4 - 'A' + 10;
+        } else if (code4 >= 'a' && code4 <= 'f') {
+            code += code4 - 'a' + 10;
+        } else {
+            System.err.println("Invalid input, expected a hex number!");
+            return;
+        }
+        
+        // Ausgeben der dezimal Zahl und des jeweilig zugeh√∂rigen Zeichens (Man beachte die Zeichenkodierung der Datei)
+        System.out.printf("dez.: %03d, char: %c", code, (char) code);
+        
     }
-    
 }

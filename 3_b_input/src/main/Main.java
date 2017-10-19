@@ -3,160 +3,67 @@ package main;
 import java.io.IOException;
 
 public class Main {
-
+    
     public static void main(String[] args) {
-
-        int input;
         
-        // Buchstaben einlesen
+        int operand1, operand2, operator;
+        boolean doubleOperator = false;
+        
         try {
-            input = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
+            operand1 = System.in.read();
+            operator = System.in.read();
+            operand2 = System.in.read();
+            if (operator == operand2) {
+                operand2 = System.in.read();
+                doubleOperator = true;
+            }
+        } catch (IOException e){
+            System.err.println(e.getMessage());
             return;
         }
         
-        // Kleinschreibung zu Groﬂschreibung konvertieren
-        if ('z' <= input && input >= 'a') {
-            input -= 'a' - 'A';
-        }
-        
-        boolean op1 = false;
-        // Input verarbeiten
-        switch (input) {
-        case 'T':
+        boolean op1, op2;
+        if (operand1 == 'T' || operand1 == 't') {
             op1 = true;
-            break;
-        case 'F':
+        } else if (operand1 == 'F' || operand1 == 'f') {
             op1 = false;
-            break;
-        default:
-            System.out.println("Invalid input! It has to be a 'T' or 'F'!");
+        } else {
+            System.err.println("Expected an 'F' or 'T'!");
             return;
         }
         
-        // Zeichen einlesen
-        try {
-            input = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        
-        char op;
-        switch (input) {
-        case '|':
-            op = '|';
-            break;
-        case '&':
-            op = '&';
-            break;
-        case '^':
-            op = '^';
-            break;
-        default:
-            System.out.println("Invalid input! It has to be a '|', '^' or '&'!");
-            return;
-        }
-
-        // Buchstaben einlesen
-        try {
-            input = System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        
-        // Kleinschreibung zu Groﬂschreibung konvertieren
-        if ('z' <= input && input >= 'a') {
-            input -= 'a' - 'A';
-        }
-        
-        boolean op2 = false;
-        boolean flag = false;
-        // Input verarbeiten
-        switch (input) {
-        case 'T':
+        if (operand2 == 'T' || operand2 == 't') {
             op2 = true;
-            break;
-        case 'F':
+        } else if (operand2 == 'F' || operand2 == 'f') {
             op2 = false;
-            break;
-        case '&':
-            if (op == '&') { op = 'a'; flag = true; } else {
-                System.out.println("Invalid input! It has to be a '&', 'T' or 'F'!");
-                return;
-            }
-            break;
-        case '|':
-            if (op == '|') { op = 'b'; flag = true; } else {
-                System.out.println("Invalid input! It has to be a '|', 'T' or 'F'!");
-                return;
-            }
-            break;
-        default:
-            System.out.println("Invalid input! It has to be a 'T' or 'F'!");
+        } else {
+            System.err.println("Expected an 'F' or 'T'!");
             return;
         }
-        
-        if ( flag ) {
-         // Buchstaben einlesen
-            try {
-                input = System.in.read();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-
-            // Kleinschreibung zu Groﬂschreibung konvertieren
-            if ('z' <= input && input >= 'a') {
-                input -= 'a' - 'A';
-            }
-            
-            // Input verarbeiten
-            switch (input) {
-            case 'T':
-                op2 = true;
-                break;
-            case 'F':
-                op2 = false;
-                break;
-            default:
-                System.out.println("Invalid input! It has to be a 'T' or 'F'!");
-                return;
-            }
-                
-            
-            
-        }
-        
         
         boolean result;
-        String operation = "" + op;
-        switch (op) {
-        case '|':
-            result = op1 | op2;
-            break;
-        case '&':
-            result = op1 & op2;
-            break;
-        case '^':
+        
+        if (operator == '&') {
+            if (!doubleOperator) {
+                result = op1 & op2;
+            } else {
+                result = op1 && op2;
+            }
+        } else if (operator == '|') {
+            if (!doubleOperator) {
+                result = op1 | op2;
+            } else {
+                result = op1 || op2;
+            }
+        } else if (operator == '^' && !doubleOperator) {
             result = op1 ^ op2;
-            break;
-        case 'a':
-            result = op1 && op2;
-            operation = "&&";
-            break;
-        case 'b':
-            result = op1 || op2;
-            operation = "||";
-            break;
-        default:
-            System.out.println("Invalid input! It has to be a '|', '^' or '&'!");
+        } else {
+            System.err.println("Unknown operator!");
             return;
         }
-
-        System.out.printf("%b %s %b = %b%n", op1, operation, op2, result);
+        
+        System.out.println(result);
+        
     }
-
+    
 }
