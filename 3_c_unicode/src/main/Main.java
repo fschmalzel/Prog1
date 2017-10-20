@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         // Deklarieren der Variablen zum einlesen.
         // Variablen für die ersten beiden Zeichen ('\\u')
-        int in1, in2;
+        int in1, in2, in3;
         // Variablen für die Hexadezimalzahl
         int code1, code2, code3, code4;
         // Variable für die letztendliche Dezimal Zahl
@@ -21,6 +21,7 @@ public class Main {
             code2 = System.in.read();
             code3 = System.in.read();
             code4 = System.in.read();
+            in3 = System.in.read();
         } catch (IOException e) {
             // Falls ein Fehler vorliegt, wird ein Fehler ausgegeben und das Programm beendet
             System.err.println(e.getMessage());
@@ -28,7 +29,7 @@ public class Main {
         }
         
         // Falls die ersten beiden Zeichen nicht '\\u' sind, wird ein Fehler ausgeben und abgebrochen
-        if ( in1 != '\\' || in2 != 'u') {
+        if ( in1 != '\\' || in2 != 'u' || in3 != '\r') {
             System.err.println("Invalid input!");
             return;
         }
@@ -41,7 +42,7 @@ public class Main {
         	 * code1 ist die 3te Stelle (0-index) damit 16^3 (4096) Wert und
         	 * muss deswegen mal 4096 genommen werden.
         	 * Dies wird dann zum letztendlichen code hinzugefügt und
-        	 * anschließend werden die weiteren Stellen addiert.
+        	 * anschließend werden die weiteren Stellen addiert (Stellenwertsysteme).
         	 */
             code += (code1 - '0') * 4096;
         } else if (code1 >= 'A' && code1 <= 'F') {
