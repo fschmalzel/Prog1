@@ -55,7 +55,7 @@ public class Main {
             return;
         }
         
-        // Analog zum vorherigen Codeblock
+        // Analog zum vorherigen Codeblock mit 16^2, also 256
         if (code2 >= '0' && code2 <= '9') {
             code += (code2 - '0') * 256;
         } else if (code2 >= 'A' && code2 <= 'F') {
