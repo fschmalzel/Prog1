@@ -28,8 +28,9 @@ public class Main {
             return;
         }
         
-        // Falls die ersten beiden Zeichen nicht '\\u' sind, wird ein Fehler ausgeben und abgebrochen
-        if ( in1 != '\\' || in2 != 'u' || in3 != '\r') {
+        // Falls die ersten beiden Zeichen nicht '\\u' sind oder zu viele Zeichen eingegeben wurden, 
+        // wird ein Fehler ausgeben und abgebrochen
+        if ( in1 != '\\' || in2 != 'u' || !(in3 == '\r' || in3 == '\n') ) {
             System.err.println("Invalid input!");
             return;
         }
@@ -92,7 +93,7 @@ public class Main {
         }
         
         // Ausgeben der dezimal Zahl und des jeweilige zugehörigen Zeichens (Man beachte die Zeichenkodierung der Datei)
-        System.out.printf("dez.: %03d, char: %c", code, (char) code);
+        System.out.printf("dec.: %03d, char: %c", code, (char) code);
         
     }
     

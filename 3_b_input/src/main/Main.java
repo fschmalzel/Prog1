@@ -79,7 +79,7 @@ public class Main {
         }
         
         // Ausgabe des Resultats.
-        System.out.println(result);
+        System.out.println(result ? 'T' : 'F');
         
     }
     
