@@ -47,7 +47,7 @@ public class Main {
         } else if (operand2 == 'F' || operand2 == 'f') {
             op2 = false;
         } else {
-            System.err.println("Expected an 'F' or 'T'!");
+            System.err.println("Expected an 'F' or 'T' as third input!");
             return;
         }
         

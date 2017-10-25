@@ -45,7 +45,7 @@ public class Main {
         	 * Dies wird dann zum letztendlichen code hinzugefügt und
         	 * anschließend werden die weiteren Stellen addiert (Stellenwertsysteme).
         	 */
-            code += (code1 - '0') * 4096;
+            code += (code1 - '0') * 16 * 16 * 16;
         } else if (code1 >= 'A' && code1 <= 'F') {
             code += (code1 - 'A' + 10) * 4096;
         } else if (code1 >= 'a' && code1 <= 'f') {
