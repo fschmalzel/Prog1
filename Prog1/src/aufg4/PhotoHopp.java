@@ -67,7 +67,7 @@ class TestFilter extends RGBImageFilter {
        int g = ((0xFF << 8 * 1) & pixel) >> 8 * 1;
        int b = ((0xFF << 8 * 0) & pixel) >> 8 * 0;
        
-       switch('j') {
+       switch('b') {
        default:
        case 'a':
            a = 0xFF;
@@ -110,12 +110,15 @@ class TestFilter extends RGBImageFilter {
            break;
            
        case 'f':
+           // Konvertierung in das YUV Farbmodell
            double colorY = 0.299* r + 0.587 * g + 0.114 * b;
            double colorU = (b - colorY) * 0.493;
            double colorV = (r - colorY) * 0.877;
            
+           // Erhˆhung der Helligkeit
            colorY += 50;
            
+           // Konvertierung zur¸ck in das RGB Farbmodell
            r = (int) (colorY + colorV/0.877);
            b = (int) (colorY + colorU/0.493);
            g = (int) (1.704 * colorY - 0.509 * r - 0.194 * b);
@@ -126,19 +129,25 @@ class TestFilter extends RGBImageFilter {
            switch('g') {
            default:
            case 'g':
+               // Die RGB-Werte m¸ssen gleich groﬂ sein und
+               // den Wert des Durchschnitts der urspr¸nglichen RGB-Werte haben.
                r = g = b = (r + g + b)/3;
                break;
            
            case 'b':
+               // Berechnung der Helligkeit
                lum = (r + g + b)/3;
                
-               r = g = b = (lum > 0x7F) ? 0xFF : 0x00;
+               // Falls die Helligkeit grˆﬂer als die H‰lfte des Maximalwerts ist, dann ist es weiﬂ
+               // ansonsten sind die Pixel schwarz.
+               r = g = b = (lum > (0xFF / 2)) ? 0xFF : 0x00;
                break;
                
            }
            break;
            
        case 'h':
+           // Negieren der Farbwerte f¸hrt zu einem Negativbild
            r = ~r;
            g = ~g;
            b = ~b;
@@ -149,6 +158,7 @@ class TestFilter extends RGBImageFilter {
            switch('4') {
            default:
            case '1':
+               // Das Bild wird nur in den oberen linken 100x100 Pixel angezeigt, der Rest ist schwarz
                if (x > 100 || y > 100) {
                    r = g = b = 0x00;
                    a = 0xFF;
@@ -156,16 +166,27 @@ class TestFilter extends RGBImageFilter {
                break;
                
            case '2':
+               /*
+                * x % 2 ist ist nur bei jeder zweiten Zahl 0 und ist damit abwechselnd wahr / falsch.
+                * y%2 ist 1 in jeder zweiten Zeile und verschiebt damit das Muster in der Zeile.
+                * Falls dieser Ausdruck wahr ist, soll der Pixel schwarz sein, wenn nicht soll er weiﬂ sein.
+                */
                r = g = b = ((x + y%2) % 2 == 0) ? 0x00 : 0xFF;
                break;
                
            case '3':
+               // Der Rot Wert wird in jedem zweiten Pixel um 1 angehoben
                r += (x + y%2) % 2;
+               // Der Rot Wert wird in jedem zweiten Pixel um 1 angehoben, auﬂer er ist schon am
+               // Maximum, dann wird er um 2 dekrementiert.
+               // r += ((x + y%2) % 2 == 0) ? (r >= 255 ? -2 : 1) : 0;
                
                break;
                
            case '4':
-               // offset = (int) (Math.abs(x - 100)*2.55 + Math.abs(y - 100)*2.55);
+               // Berechnung der Distanz zur Mitte, ausgehend davon dass das Bild 200x200 Pixel groﬂ ist
+               // Die minimale Distanz zum Rand ist damit 100 Pixel, nachdem der Rand weiﬂ sein soll,
+               // muss das Offset an dieser Stelle minimal 255 sein, deswegen wird die Distanz mal 2.55 genommen.
                offset = (int) (Math.sqrt( Math.pow(x-100, 2) + Math.pow(y-100,2) ) * 2.55);
                
                r += offset;
@@ -186,7 +207,7 @@ class TestFilter extends RGBImageFilter {
            break;
            
        case 'j':
-           switch('2') {
+           switch('1') {
            default:
            case '1':
                b = r + g + b;

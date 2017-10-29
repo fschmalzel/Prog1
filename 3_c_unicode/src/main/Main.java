@@ -16,85 +16,72 @@ public class Main {
         // Einlesen der Zeichen
         try {
             in1 = System.in.read();
+            if (in1 != '\\') 
+                throw new IOException("The first symbol has to be a \\!");
+            
             in2 = System.in.read();
-            code1 = System.in.read();
-            code2 = System.in.read();
-            code3 = System.in.read();
-            code4 = System.in.read();
+            if (in2 != 'u') 
+                throw new IOException("The second symbol has to be a u!");
+            
+            code1 = toUppercase(System.in.read());
+            if (!isHex(code1))
+                throw new IOException("The third symbol has to be hexadecimal!");
+            
+            code2 = toUppercase(System.in.read());
+            if (!isHex(code2))
+                throw new IOException("The fourth symbol has to be hexadecimal!");
+            
+            code3 = toUppercase(System.in.read());
+            if (!isHex(code3))
+                throw new IOException("The fifth symbol has to be hexadecimal!");
+            
+            code4 = toUppercase(System.in.read());
+            if (!isHex(code4))
+                throw new IOException("The sixth symbol has to be hexadecimal!");
+            
             in3 = System.in.read();
+            if (!(in3 == '\r' || in3 == '\n' || in3 == ' '))
+                throw new IOException("The input has to be 6 symbols long!");
         } catch (IOException e) {
             // Falls ein Fehler vorliegt, wird ein Fehler ausgegeben und das Programm beendet
             System.err.println(e.getMessage());
             return;
         }
         
-        // Falls die ersten beiden Zeichen nicht '\\u' sind oder zu viele Zeichen eingegeben wurden, 
-        // wird ein Fehler ausgeben und abgebrochen
-        if ( in1 != '\\' || in2 != 'u' || !(in3 == '\r' || in3 == '\n') ) {
-            System.err.println("Invalid input!");
-            return;
-        }
+        code += toNumberFromHex(code1);
+        code = code << 4;
         
-        // Konvertieren des Zeichens in die zugehörige Dezimalzahl bezogen auf die Stelle
-        if (code1 >= '0' && code1 <= '9') {
-        	/*
-        	 * Zeichencode - Zeichencode des ersten Zeichens der Ansammlung ergibt die eigentliche Zahl,
-        	 * bei den Buchstaben muss man das ganze dann noch um 10 erhöhen da A nicht 0 ist sondern "10".
-        	 * code1 ist die 3te Stelle (0-index) damit 16^3 (4096) Wert und
-        	 * muss deswegen mal 4096 genommen werden.
-        	 * Dies wird dann zum letztendlichen code hinzugefügt und
-        	 * anschließend werden die weiteren Stellen addiert (Stellenwertsysteme).
-        	 */
-            code += (code1 - '0') * 16 * 16 * 16;
-        } else if (code1 >= 'A' && code1 <= 'F') {
-            code += (code1 - 'A' + 10) * 4096;
-        } else if (code1 >= 'a' && code1 <= 'f') {
-            code += (code1 - 'a' + 10) * 4096;
-        } else {
-            // Falls es keine Hexadezimalzahl ist, Fehler ausgeben und abbrechen
-            System.err.println("Invalid input, expected a hex number!");
-            return;
-        }
+        code += toNumberFromHex(code2);
+        code = code << 4;
         
-        // Analog zum vorherigen Codeblock mit 16^2, also 256
-        if (code2 >= '0' && code2 <= '9') {
-            code += (code2 - '0') * 256;
-        } else if (code2 >= 'A' && code2 <= 'F') {
-            code += (code2 - 'A' + 10) * 256;
-        } else if (code2 >= 'a' && code2 <= 'f') {
-            code += (code2 - 'a' + 10) * 256;
-        } else {
-            System.err.println("Invalid input, expected a hex number!");
-            return;
-        }
+        code += toNumberFromHex(code3);
+        code = code << 4;
         
-        // Analog zum vorherigen Codeblock
-        if (code3 >= '0' && code3 <= '9') {
-            code += (code3 - '0') * 16;
-        } else if (code3 >= 'A' && code3 <= 'F') {
-            code += (code3 - 'A' + 10) * 16;
-        } else if (code3 >= 'a' && code3 <= 'f') {
-            code += (code3 - 'a' + 10) * 16;
-        } else {
-            System.err.println("Invalid input, expected a hex number!");
-            return;
-        }
-        
-        // Analog zum vorherigen Codeblock
-        if (code4 >= '0' && code4 <= '9') {
-            code += code4 - '0';
-        } else if (code4 >= 'A' && code4 <= 'F') {
-            code += code4 - 'A' + 10;
-        } else if (code4 >= 'a' && code4 <= 'f') {
-            code += code4 - 'a' + 10;
-        } else {
-            System.err.println("Invalid input, expected a hex number!");
-            return;
-        }
+        code += toNumberFromHex(code4);
         
         // Ausgeben der dezimal Zahl und des jeweilige zugehörigen Zeichens (Man beachte die Zeichenkodierung der Datei)
         System.out.printf("dec.: %03d, char: %c", code, (char) code);
         
+    }
+    
+    private static boolean isHex(int code) {
+        if (code >= 'A' && code <= 'Z' || code >= '0' && code <= '9')
+            return true;
+        return false;
+    }
+    
+    private static int toNumberFromHex(int code) {
+        if (code >= 'A' && code <= 'Z')
+            return code - 'A' + 10;
+        else if (code >= '0' && code <= '9')
+            return code - '0';
+        return 0;
+    }
+    
+    private static int toUppercase(int code) {
+        if (code >= 'a' && code <= 'z')
+            return code += 'A' - 'a';
+        return code;
     }
     
 }
