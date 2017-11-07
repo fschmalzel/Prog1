@@ -62,12 +62,15 @@ class TestFilter extends RGBImageFilter {
   
     public int filterRGB(int x, int y, int pixel) {
        
-       int a = ((0xFF << 8 * 3) & pixel) >> 8 * 3;
+       int a = ((0xFF << 8 * 3) & pixel) >>> 8 * 3;
        int r = ((0xFF << 8 * 2) & pixel) >> 8 * 2;
        int g = ((0xFF << 8 * 1) & pixel) >> 8 * 1;
        int b = ((0xFF << 8 * 0) & pixel) >> 8 * 0;
        
-       switch('b') {
+       char aufgabe = 'g';
+       char teilAufgabe = 'g';
+       
+       switch(aufgabe) {
        default:
        case 'a':
            a = 0xFF;
@@ -77,7 +80,7 @@ class TestFilter extends RGBImageFilter {
            break;
            
        case 'b':
-           switch('b') {
+           switch(teilAufgabe) {
            default:
            case 'r':
                g = b = 0;
@@ -103,6 +106,7 @@ class TestFilter extends RGBImageFilter {
                a = 0xFF;
                r = g = b = 0;
            }
+           
            break;
            
        case 'e':
@@ -126,7 +130,7 @@ class TestFilter extends RGBImageFilter {
            break;
            
        case 'g':
-           switch('g') {
+           switch(teilAufgabe) {
            default:
            case 'g':
                // Die RGB-Werte müssen gleich groß sein und
@@ -155,7 +159,7 @@ class TestFilter extends RGBImageFilter {
            
        case 'i':
            int offset;
-           switch('4') {
+           switch(teilAufgabe) {
            default:
            case '1':
                // Das Bild wird nur in den oberen linken 100x100 Pixel angezeigt, der Rest ist schwarz
@@ -207,7 +211,7 @@ class TestFilter extends RGBImageFilter {
            break;
            
        case 'j':
-           switch('1') {
+           switch(teilAufgabe) {
            default:
            case '1':
                b = r + g + b;
