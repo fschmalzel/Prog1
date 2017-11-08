@@ -12,8 +12,8 @@ public class Main {
         zahl = in.nextLong();
         in.close();
         
-        if ( zahl <= 1 && zahl >= -1 ) {
-            System.out.println("Eine Primzahl muss größer als 1 oder kleiner als -1 sein!");
+        if ( zahl <= 1 ) {
+            System.out.println("Eine Primzahl muss größer als 1 sein!");
             return;
         }
         

@@ -42,6 +42,7 @@ public class PhotoHopp {
     }
 }
 
+@SuppressWarnings("serial")
 class ImagePanel extends JPanel {
     private Image image;
 
@@ -59,7 +60,7 @@ class ImagePanel extends JPanel {
 class TestFilter extends RGBImageFilter {
 
     public int filterRGB(int x, int y, int pixel) {
-
+        
         /*
          * Aufspalten des Pixels in die einzelnen Komponenten, indem man eine Maske auf
          * den Pixel anwendet und die herauskommende Zahl anschließend noch nach rechts
@@ -70,9 +71,9 @@ class TestFilter extends RGBImageFilter {
         int r = ((0xFF << 8 * 2) & pixel) >>> 8 * 2; // Rot
         int g = ((0xFF << 8 * 1) & pixel) >>> 8 * 1; // Grün
         int b = ((0xFF << 8 * 0) & pixel) >>> 8 * 0; // Blau
-
+        
         // a - j
-        char aufgabe = 'a';
+        char aufgabe = 'c';
 
         // r / g / b
         char teilAufgabeB = 'r';
@@ -84,7 +85,7 @@ class TestFilter extends RGBImageFilter {
         char teilAufgabeI = '1';
 
         // 1 - 2
-        char teilAufgabeJ = '1';
+        char teilAufgabeJ = '2';
 
         switch (aufgabe) {
         default:
@@ -128,15 +129,14 @@ class TestFilter extends RGBImageFilter {
             // Nur helle oder dunkle Pixel
             {
                 // Berechnung der Helligkeit
-                int lum = (r + g + b) / 3;
+                int lum = (int) ((r + g + b) / 3.0);
     
                 // Falls die Helligkeit kleiner als 2/3 des Maximums und größer als 1/3 des
                 // Maximums ist,
-                // dann ist der Pixel schwarz, ansonsten wird er ganz normal dargestellt
-                if (lum < 256 * (2 / 3) && lum > 256 * (1 / 3)) {
-                    a = 0xFF;
-                    r = g = b = 0;
-                }
+                // dann ist der Pixel durchsichtig, ansonsten wird er ganz normal dargestellt
+                if (lum < (256 * (2 / 3.0)) && lum > (256 * (1 / 3.0))) {
+                    a = 0x00;
+               }
             }
             break;
 
@@ -154,7 +154,7 @@ class TestFilter extends RGBImageFilter {
                 double colorV = (r - colorY) * 0.877;
     
                 // Erhöhung der Helligkeit
-                colorY += 50;
+                colorY += 25;
     
                 // Konvertierung zurück in das RGB Farbmodell
                 r = (int) (colorY + colorV / 0.877);
@@ -195,6 +195,11 @@ class TestFilter extends RGBImageFilter {
             r = ~r;
             g = ~g;
             b = ~b;
+            
+            // Abschneiden der vorderen 24 bits, um das negieren eines 8-bit Wertes zu "simulieren"
+            r &= 0xFF;
+            g &= 0xFF;
+            b &= 0xFF;
             break;
 
         case 'i':
@@ -272,9 +277,12 @@ class TestFilter extends RGBImageFilter {
                 break;
 
             case '2':
-
-                // Interessanter Effekt der durch Underflows hervorgerufen wird, wie man es
-                // z. B. von einer beschädigten Datei kennt
+                // Fading ins Schwarze
+                
+                /*
+                 * Berechnung der Distanz zur Mitte, wenn man nicht diagonal gehen darf.
+                 * Ansonsten Analog zu Aufgabe i Teil 4
+                 */
                 {
                     int offset = (int) (Math.abs(x - 100) * 2.55 + Math.abs(y - 100) * 2.55);
     
@@ -284,16 +292,23 @@ class TestFilter extends RGBImageFilter {
                 }
                 break;
             }
-
             break;
+            
         }
-
-        // Überprüfen ob die Werte ihren 8-bit Wertebereich übersteigen und falls doch
-        // ist der Wert der Maximalwert
+        
+        // Überprüfen ob die Werte ihren 8-bit Wertebereich übersteigen und falls ja
+        // soll der Wert der Maximalwert (0xFF / 255) sein, um einen Overflow bzw.
+        // einen Einfluss auf die anderen Komponenten zu vermeiden
         a = (a > 0xFF) ? 0xFF : a;
         r = (r > 0xFF) ? 0xFF : r;
         g = (g > 0xFF) ? 0xFF : g;
         b = (b > 0xFF) ? 0xFF : b;
+        
+        // Vermeidung das eine Komponente eine andere beeinflusst bzw. vermeiden eines Underflows
+        a = (a < 0) ? 0 : a;
+        r = (r < 0) ? 0 : r;
+        g = (g < 0) ? 0 : g;
+        b = (b < 0) ? 0 : b;
 
         /*
          * Zusammenfügen der Pixel in dem man die einzelnen Komponenten wieder an die
