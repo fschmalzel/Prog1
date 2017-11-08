@@ -113,7 +113,7 @@ public class Main {
         code += code2 * 16 * 16;
          
         // Konvertieren des Symbols zur Hexzahl;
-        if (code3 >= 'A' && code3 <= 'Z') {
+        if (code3 >= 'A' && code3 <= 'F') {
             code3 = code3 - 'A' + 10;
         } else if ( code3 >= '0' && code3 <= '9') {
             code3 = code3 - '0';
@@ -138,7 +138,7 @@ public class Main {
         
         // Ausgeben der dezimal Zahl und des jeweilige zugehörigen Zeichens
         // Man beachte die Zeichenkodierung der Datei, falls man alle Zeichen im UTF16 Standard ausgeben möchte
-        System.out.printf("dec.: " + code + ", char: " + (char) code);
+        System.out.println("dec.: " + code + ", char: " + (char) code);
         
     }
     
