@@ -1,4 +1,4 @@
-package hex;
+package allbetter;
 
 public class LiteralReader {
 
@@ -174,7 +174,14 @@ public class LiteralReader {
             // apply Horner
             switch (currentState) {
             case (STATE_BIN):
-                numbers = 2;
+                if (value < 0) {
+                    System.out.println("Zahl zu gross");
+                    currentState = STATE_CLEAR;
+                } else if ( sign > 0) {
+                    //TODO make a bitwise representation and somehow implement a check
+                    
+                }
+                
                 break;
                 
             case (STATE_OCT):
@@ -182,7 +189,27 @@ public class LiteralReader {
                 break;
                 
             case (STATE_DEC):
-                numbers = 10;
+
+                // Kontrollfrage: Warum die Fallunterscheidung fuer neg. bzw. pos. Vorzeichen
+                // und nicht einfach zum Schluss sign * errechneter Betrag ?
+                
+                // Da der minimale Wert vom Betrag eins größer ist als der maximale Wert
+                if (sign > 0)
+                    if ((Integer.MAX_VALUE - cipherValue)/10 >= value )
+                        value = value * 10 + cipherValue;
+                    else {
+                        System.out.println("Zahl zu gross");
+                        currentState = STATE_CLEAR;
+                    }
+            
+                if (sign < 0)
+                    if ((Integer.MIN_VALUE + cipherValue)/10 <= value )
+                        value = value * 10 - cipherValue;
+                    else {
+                        System.out.println("Zahl zu klein");
+                        currentState = STATE_CLEAR;
+                    }
+                
                 break;
                 
             case (STATE_HEX):
@@ -195,26 +222,6 @@ public class LiteralReader {
             
             firstDigit = false;
             previousPlaceholder = false;
-            
-            // Kontrollfrage: Warum die Fallunterscheidung fuer neg. bzw. pos. Vorzeichen
-            // und nicht einfach zum Schluss sign * errechneter Betrag ?
-            
-            // Da der minimale Wert vom Betrag eins größer ist als der maximale Wert
-            if (sign > 0)
-                if ((Integer.MAX_VALUE - cipherValue)/numbers >= value )
-                    value = value * numbers + cipherValue;
-                else {
-                    System.out.println("Zahl zu gross");
-                    currentState = STATE_CLEAR;
-                }
-        
-            if (sign < 0)
-                if ((Integer.MIN_VALUE + cipherValue)/numbers <= value )
-                    value = value * numbers - cipherValue;
-                else {
-                    System.out.println("Zahl zu klein");
-                    currentState = STATE_CLEAR;
-                }
             
         
         }

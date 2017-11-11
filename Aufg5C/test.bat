@@ -1,1 +1,1 @@
-java -cp "bin" hex.LiteralReader < testcases2.txt
+java -cp "bin" hex.LiteralReader < testcases.txt
