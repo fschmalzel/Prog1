@@ -18,11 +18,14 @@ public class LiteralReader {
         int column = 0;
         int sign = 1;
         int value = 0;
+        // The amount of digits without leading zeros that have been read
         int digits = 0;
+        // Is it the first digit to be read, important for the '_'
         boolean firstNumber = true;
+        // Was the previous character a '_', is being checked in STATE_COMPL
         boolean previousUnderscore = false;
 
-        System.out.println("enter decimal literal");
+        System.out.println("enter literal");
         while (true) {
             char c = (char) System.in.read();
             column++;
@@ -44,10 +47,8 @@ public class LiteralReader {
                 } else if ('1' <= c && c <= '9')
                     currentState = STATE_DEC;
                 else if (c == '0') {
-                    // For now simply allow cipher 0 at every position of a decimal literal,
-                    // which is strictly speaking not right for column 1.
-                    // But this is the right hook for
-                    // your extension concerning hex and oct literals, both starting with 0
+                    // The number has to be a oct, hex or bin number, which has to be
+                    // determined by the next input
                     currentState = STATE_TYPE;
                     continue;
                 } else if ((c == '+') || (c == '-'))
@@ -60,6 +61,7 @@ public class LiteralReader {
 
 
             case (STATE_SIGN):
+                // See STATE_INITIAL, just without the sign.
                 if ('1' <= c && c <= '9')
                     currentState = STATE_DEC;
                 else if ( c == '0')
@@ -71,10 +73,14 @@ public class LiteralReader {
             case (STATE_BIN):
                 if ('0' <= c && c <= '1') { // nothing to do
                 } else if (c == '_') {
-                    if (firstNumber) {
+                    // If the first number is to be read, but a '_'
+                    // has been read it is not a valid literal
+                    if (firstNumber)
                         currentState = STATE_WRONG;
-                    }
                 } else if ( ((c == '\r') || (c == '\n')) && !previousUnderscore && !firstNumber)
+                    // There has to be one digit, because '0b' is not valid and the
+                    // previous symbol is not allowed to be a '_' because '0b0_' is
+                    // also not a valid literal
                     currentState = STATE_COMPL;
                 else
                     currentState = STATE_WRONG;
@@ -83,9 +89,8 @@ public class LiteralReader {
             case (STATE_OCT):
                 if ('0' <= c && c <= '7') { // nothing to do
                 } else if (c == '_') {
-                    if (firstNumber) {
+                    if (firstNumber)
                         currentState = STATE_WRONG;
-                    }
                 } else if ( ((c == '\r') || (c == '\n')) && !previousUnderscore && !firstNumber)
                     currentState = STATE_COMPL;
                 else
@@ -95,9 +100,8 @@ public class LiteralReader {
             case (STATE_DEC):
                 if ('0' <= c && c <= '9') { // nothing to do
                 } else if (c == '_') {
-                    if (firstNumber) {
+                    if (firstNumber)
                         currentState = STATE_WRONG;
-                    }
                 } else if ( ((c == '\r') || (c == '\n')) && !previousUnderscore && !firstNumber)
                     currentState = STATE_COMPL;
                 else
@@ -107,9 +111,8 @@ public class LiteralReader {
             case (STATE_HEX):
                 if ('0' <= c && c <= '9' || 'a' <= c && c <= 'f' || 'A' <= c && c <= 'F') { // nothing to do
                 } else if (c == '_') {
-                    if (firstNumber) {
+                    if (firstNumber)
                         currentState = STATE_WRONG;
-                    }
                 } else if ( ((c == '\r') || (c == '\n')) && !previousUnderscore && !firstNumber)
                     currentState = STATE_COMPL;
                 else
@@ -118,16 +121,22 @@ public class LiteralReader {
             
             case (STATE_TYPE):
                 if (c == 'b') {
+                    // Input is now a '0b' so it has to be a binary number
                     currentState = STATE_BIN;
+                    // We need to continue, so that the b is not interpreted
                     continue;
-                } else if ('0' <= c && c <= '7') {
-                    currentState = STATE_OCT;
-                } else if (c == '_') {
+                } else if ('0' <= c && c <= '7' || c == '_') {
+                    // Input is now a '01' - '07' which is oct
+                    // or a '0_' which can only be valid if the overall number is oct
+                    // Here we can't continue because we have to interpret the 0 - 7
                     currentState = STATE_OCT;
                 } else if ( c == 'x' ) {
+                    // Input is now a '0x' so it has to be a hexadecimal number
                     currentState = STATE_HEX;
+                    // We need to continue, so that the x is not interpreted
                     continue;
-                } else if ( ((c == '\r') || (c == '\n')) && !previousUnderscore)
+                } else if ( ((c == '\r') || (c == '\n')) )
+                    // 
                     currentState = STATE_COMPL;
                 else
                     currentState = STATE_WRONG;
@@ -249,17 +258,30 @@ public class LiteralReader {
                 if (cipherValue == 0 && digits == 0) {
                     break;
                 } else if (digits < 32) {
+                    // Wenn es weniger als 32 Zahlen ohne führende 0 sind können
+                    // noch Zahlen eingelesen werden
                     digits += 4;
+                    // Nachdem es eine Hexzahl ist kommen 4 bits hinzu
                     if (sign > 0) {
+                        // Die bits um 4 nach links schieben und an
+                        // die 4 leeren Stellen den Wert reinsetzen
                         value = value << 4;
                         value += cipherValue;
                     } else {
+                        // Falls das Vorzeichen negativ ist muss am Schluss das Komplement gebildet
+                        // werden, was auch heißt das ich davon ausgehe das ich ein Komplement reinkriege
+                        
+                        // Deswegen wechsle ich das Vorzeichen, schiebe den Wert 4 nach rechts
+                        // fülle die Lücke mit den neuen Bits und wechsle das Vorzeichen wieder
                         value = - value;
                         value = value << 4;
                         value += cipherValue;
                         value = - value;
                     }
                 } else {
+                    // Falls die Zahl schon 32 signifikante Stellen beinhalten, können keine mehr
+                    // hinzugefügt werden, da sonst vorne Zahlen verloren gehen
+                    // Deswegen der Fehler mit zu vielen Stellen
                     System.out.println("Zu viele Stellen!");
                     currentState = STATE_CLEAR;
                 }
