@@ -18,8 +18,6 @@ public class LiteralReader {
         int column = 0;
         int sign = 1;
         int value = 0;
-        // The amount of digits without leading zeros that have been read
-        int digits = 0;
         // Is it the first digit to be read, important for the '_'
         boolean firstNumber = true;
         // Was the previous character a '_', is being checked in STATE_COMPL
@@ -37,7 +35,6 @@ public class LiteralReader {
                 value = 0;
                 sign = 1;
                 column = 1;
-                digits = 0;
                 firstNumber = true;
                 previousUnderscore = false;
 
@@ -211,19 +208,9 @@ public class LiteralReader {
                 break;
                 
             case (STATE_BIN):
-                if (cipherValue == 0 && digits == 0) {
-                    break;
-                } else if (digits < 32) {
-                    digits += 1;
-                    if (sign > 0) {
-                        value = value << 1;
-                        value += cipherValue;
-                    } else {
-                        value = - value;
-                        value = value << 1;
-                        value += cipherValue;
-                        value = - value;
-                    }
+                if ((0x8000_0000 & value) == 0) {
+                    value <<= 1;
+                    value += cipherValue;
                 } else {
                     System.out.println("Zu viele Stellen!");
                     currentState = STATE_CLEAR;
@@ -231,23 +218,9 @@ public class LiteralReader {
                 break;
                 
             case (STATE_OCT):
-                if (cipherValue == 0 && digits == 0) {
-                    break;
-                } else if (digits < 30) {
-                    if (digits == 0 && cipherValue <= 3)
-                        digits += 2;
-                    else
-                        digits += 3;
-                    
-                    if (sign > 0) {
-                        value = value << 3;
-                        value += cipherValue;
-                    } else {
-                        value = - value;
-                        value = value << 3;
-                        value += cipherValue;
-                        value = - value;
-                    }
+                if ((0xE000_0000 & value) == 0) {
+                    value <<= 3;
+                    value += cipherValue;
                 } else {
                     System.out.println("Zu viele Stellen!");
                     currentState = STATE_CLEAR;
@@ -255,29 +228,9 @@ public class LiteralReader {
                 break;
             
             case (STATE_HEX):
-                if (cipherValue == 0 && digits == 0) {
-                    break;
-                } else if (digits < 32) {
-                    // Wenn es weniger als 32 Zahlen ohne führende 0 sind können
-                    // noch Zahlen eingelesen werden
-                    digits += 4;
-                    // Nachdem es eine Hexzahl ist kommen 4 bits hinzu
-                    if (sign > 0) {
-                        // Die bits um 4 nach links schieben und an
-                        // die 4 leeren Stellen den Wert reinsetzen
-                        value = value << 4;
-                        value += cipherValue;
-                    } else {
-                        // Falls das Vorzeichen negativ ist muss am Schluss das Komplement gebildet
-                        // werden, was auch heißt das ich davon ausgehe das ich ein Komplement reinkriege
-                        
-                        // Deswegen wechsle ich das Vorzeichen, schiebe den Wert 4 nach rechts
-                        // fülle die Lücke mit den neuen Bits und wechsle das Vorzeichen wieder
-                        value = - value;
-                        value = value << 4;
-                        value += cipherValue;
-                        value = - value;
-                    }
+                if ((0xF000_0000 & value) == 0) {
+                    value <<= 4;
+                    value += cipherValue;
                 } else {
                     // Falls die Zahl schon 32 signifikante Stellen beinhalten, können keine mehr
                     // hinzugefügt werden, da sonst vorne Zahlen verloren gehen
