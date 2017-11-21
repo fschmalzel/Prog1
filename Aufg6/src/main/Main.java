@@ -350,7 +350,7 @@ public class Main {
             System.out.println();
             
             // Suchen der Zeichenkette in der ersten Zeichenkette
-            for (int i = 0; i < input.length - newInput.length; i++) {
+            for (int i = 0; i < input.length - newInput.length + 1; i++) {
 
                 for (int j = 0; j < newInput.length; j++) {
                     
