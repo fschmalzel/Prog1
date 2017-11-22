@@ -1,8 +1,8 @@
-package main;
+package var2;
 
 import java.io.IOException;
 
-public class Main2 {
+public class Main {
     
     public static void main(String[] args) throws IOException {
         
@@ -76,6 +76,12 @@ public class Main2 {
             
             System.out.println("Das wievielte Zeichen soll gelöscht werden (0-index)? " + 
                     "Es werden nur Zahlen von 0 - 9 angenommen!");
+            
+            for (int i = 0; i <= 9 && i < input.length; i++)
+                System.out.print(i);
+            System.out.println();
+            printArray(input);
+            
             System.out.print("> ");
             
             int toDelete;
@@ -181,6 +187,12 @@ public class Main2 {
         if (teil4) {
             System.out.println("An welcher Stelle soll ein Bindezeichen eingefügt werden (0-index)?" + 
                     "Es werden nur Zahlen von 0 - 9 angenommen!");
+            
+            for (int i = 0; i <= 9 && i < input.length; i++)
+                System.out.print(i);
+            System.out.println();
+            printArray(input);
+            
             System.out.print("> ");
             
             int insertIndex;
@@ -274,7 +286,11 @@ public class Main2 {
     }
 
     public static int[] getArray() throws IOException {
-        int inputChar = System.in.read();
+        
+        int inputChar;
+        do {
+            inputChar = System.in.read();
+        } while (inputChar == '\n' || inputChar == '\r');
 
         int length = 0;
         int[] input = new int[32];
