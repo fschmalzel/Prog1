@@ -307,4 +307,18 @@ public class CharArrayOps {
         
     }
     
+    /**
+     * Creates a copy of an array
+     * 
+     * @param The array which will be copied
+     * @return The copied array
+     */
+    public static int[] copyArray(int[] array) {
+        int[] newArray = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
+        return newArray;
+    }
+    
 }
