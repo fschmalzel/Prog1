@@ -10,7 +10,7 @@ public class CryptoTest {
         int[] backup = CharArrayOps.copyArray(input);
         
         
-        // Ceasar cipher
+        // Caesar-Verschlüsselung
         System.out.println("\nCaesar-Verschlüsselung:");
         Crypto.encryptCeasar(input, 1);
         CharArrayOps.print(input);
@@ -18,9 +18,9 @@ public class CryptoTest {
         Crypto.decryptCeasar(input, 1);
         CharArrayOps.print(input);
         
-        System.out.println(CharArrayOps.compare(input, backup) ? "Alles richtig!" : "Irgendwas hat einen Fehler!");
+        System.out.println(CharArrayOps.compare(input, backup) ? "Alles richtig!" : "Irgendwo ist ein Fehler unterlaufen!");
         
-        // Bijective cipher
+        // Bijektive-Verschlüsselung
         int[] key = {
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'
@@ -34,7 +34,7 @@ public class CryptoTest {
         Crypto.decryptBijective(input, key);
         CharArrayOps.print(input);
         
-        System.out.println(CharArrayOps.compare(input, backup) ? "Alles richtig!" : "Irgendwas hat einen Fehler!");
+        System.out.println(CharArrayOps.compare(input, backup) ? "Alles richtig!" : "Irgendwo ist ein Fehler unterlaufen!");
         
     }
 }
