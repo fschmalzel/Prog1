@@ -13,7 +13,7 @@ public class CharArrayOps {
         print(input);
         
         int pos = find(input, getLine("Bitte geben Sie Text ein nach dem gesucht werden soll!"));
-        System.out.println("Das gesuchte befindet sich in Stelle " + pos + ".");
+        System.out.println("Das gesuchte befindet sich an Stelle " + pos + ".");
         
         input = deleteAtPos(input, 3);
         print(input);

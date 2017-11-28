@@ -5,7 +5,6 @@ import java.io.IOException;
 public class Obscure {
     
     public static void main(String[] args) throws IOException {
-        // TODO Auto-generated method stub
         
         int[] input = CharArrayOps.getLine("Bitte zu verschlüsselnden Text eingeben: ");
         

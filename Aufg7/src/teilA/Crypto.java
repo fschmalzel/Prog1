@@ -124,4 +124,32 @@ public class Crypto {
         
     }
     
+    /**
+     * Encrypts an array using the a EXOR function.
+     * 
+     * @param array The array which will be encrypted
+     * @param key The key used to encrypt the array
+     */
+    public static void encryptEXOR(int[] array, long key) {
+        
+        for (int i = 0; i < array.length; i++) {
+            array[i] = array[i] ^ (int) ((key & (0xFF << ((i%8) * 8))) >>> ((i%8) * 8));
+        }
+        
+    }
+    
+    /**
+     * Decrypts an array using an EXOR function.
+     * 
+     * @param array The array which will be decrypted
+     * @param key The key used to decrypt the array
+     */
+    public static void decryptEXOR(int[] array, long key) {
+        encryptEXOR(array, key);
+    }
+    
+    
+    
+    
+    
 }
