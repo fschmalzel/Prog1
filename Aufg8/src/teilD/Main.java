@@ -16,7 +16,8 @@ public class Main {
 //        }
 //        System.out.println();
         
-        timeForFindPrimes(100, 10);
+//        timeForFindPrimes(100, 10);
+        timeForFindPrimes2(20);
         
     }
     
@@ -71,6 +72,18 @@ public class Main {
             numberOfPrimes(i*stepSize);
             time += System.nanoTime();
             System.out.println(i * stepSize + ";" + time);
+            
+        }
+    }
+    
+    public static void timeForFindPrimes2(int steps) {
+        int n = 2;
+        for(int i = 1; i <= steps; i++) {
+            long time = -System.nanoTime();
+            numberOfPrimes(n);
+            time += System.nanoTime();
+            System.out.println(n + ";" + time);
+            n <<= 1;
             
         }
     }
