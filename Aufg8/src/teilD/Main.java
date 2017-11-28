@@ -4,23 +4,33 @@ public class Main {
     
     public static void main(String[] args) {
         
-        System.out.println(isPrime(3));
-        System.out.println(isPrime(20));
-        System.out.println(isPrime(323));
+//        System.out.println(isPrime(3));
+//        System.out.println(isPrime(20));
+//        System.out.println(isPrime(323));
+//        
+//        long n = 80;
+//        long[] primes = findPrimes(n);
+//        System.out.println("Von der Stelle " + n + " aus wurden " + primes.length + " viele Primzahlen gefunden!");
+//        for (long prime : primes) {
+//            System.out.print(prime + " | ");
+//        }
+//        System.out.println();
         
-        long n = 80;
-        long[] primes = findPrimes(n);
-        System.out.println("Von der Stelle " + n + " aus wurden " + primes.length + " viele Primzahlen gefunden!");
-        for (long prime : primes) {
-            System.out.print(prime + " | ");
-        }
-        System.out.println();
+        timeForFindPrimes(100, 10);
         
     }
     
     
     public static boolean isPrime(long n) {
         for (long i = 2; i < n; i++) {
+            if (n % i == 0)
+                return false;
+        }
+        return true;
+    }
+    
+    public static boolean isPrime(int n) {
+        for (int i = 2; i < n; i++) {
             if (n % i == 0)
                 return false;
         }
@@ -44,9 +54,10 @@ public class Main {
         return array;
     }
     
-    public static long numberOfPrimes(long n) {
-        long count = 0;
-        for (long i = n; i >= 2; i--) {
+    public static long numberOfPrimes(int n) {
+        int count = 0;
+        
+        for (int i = n; i >= 2; i--) {
             if(isPrime(i)) {
                 count++;   
             }
@@ -54,11 +65,12 @@ public class Main {
         return count;
     }
     
-    public static void timeForFindPrimes(long steps, long stepSize) {
+    public static void timeForFindPrimes(int steps, int stepSize) {
         for(int i = 1; i <= steps; i++) {
-            double time = -System.nanoTime();
-            long amount = numberOfPrimes(i*stepSize);
+            long time = -System.nanoTime();
+            numberOfPrimes(i*stepSize);
             time += System.nanoTime();
+            System.out.println(i * stepSize + ";" + time);
             
         }
     }
