@@ -4,20 +4,20 @@ public class Main {
     
     public static void main(String[] args) {
         
-//        System.out.println(isPrime(3));
-//        System.out.println(isPrime(20));
-//        System.out.println(isPrime(323));
-//        
-//        long n = 80;
-//        long[] primes = findPrimes(n);
-//        System.out.println("Von der Stelle " + n + " aus wurden " + primes.length + " viele Primzahlen gefunden!");
-//        for (long prime : primes) {
-//            System.out.print(prime + " | ");
-//        }
-//        System.out.println();
+        System.out.println(isPrime(3));
+        System.out.println(isPrime(20));
+        System.out.println(isPrime(323));
         
-//        timeForFindPrimes(100, 10);
-        timeForFindPrimes2(20);
+        long n = 80;
+        long[] primes = findPrimes(n);
+        System.out.println("Von der Stelle " + n + " aus wurden " + primes.length + " viele Primzahlen gefunden!");
+        for (long prime : primes) {
+            System.out.print(prime + " | ");
+        }
+        System.out.println();
+        
+        timeForFindPrimes(100, 10);
+        timeForFindPrimes2(10);
         
     }
     

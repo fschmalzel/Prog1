@@ -1,62 +1,40 @@
-package teilA;
+package main;
 
 import java.io.IOException;
 
-public class Eavesdropper {
+/**
+ * None working code, do not use
+ * 
+ * @author Felix Sch.
+ *
+ */
+public class BruteForceBiject {
     
     public static void main(String[] args) throws IOException {
+       int[] input = CharArrayOps.getLine("Welche Nachricht, soll getestet werden?");
+       int[] toSearch = {'a', 'u', 'g', 's', 'b', 'u', 'r', 'g'};
         
-        int[] input = CharArrayOps.getLine("Welche Nachricht, soll getestet werden?");
-        int[] toSearch = {'a', 'u', 'g', 's', 'b', 'u', 'r', 'g'};
-        
-        // Caesar-Verschlüsselung knacken
-        Crypto.encryptCeasar(input, 26);
-        
-        int key = bruteForceCeaserKey(input, toSearch);
-        
-        if (key >= 0)
-            System.out.println("Der Schlüssel ist: " + key + ".");
-        else
-            System.out.println("Der Schlüssel konnte nicht ermittelt werden!");
-        
-        System.out.println();
-        
-        // Bijektive-Verschlüsselung knacken
-        int[] bijectivKey = {
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'
-        };
-        
-        Crypto.encryptBijective(input, bijectivKey);
-        
-        int[] bijectiveKey2 = bruteForceBijectivKey(input, toSearch);
-        
-        if (bijectiveKey2[0] >= 0) {
-            System.out.println("Der Schlüssel ist: ");
-            CharArrayOps.print(bijectiveKey2);
-        } else
-            System.out.println("Der Schlüssel konnte nicht ermittelt werden!");
-        
-        int[] test = CharArrayOps.copyArray(input);
-        Crypto.decryptBijective(test, bijectiveKey2);
-        CharArrayOps.print(test);
-        
-        System.out.println();
-        
-        
-    }
-    
-    public static int bruteForceCeaserKey(int[] array, int[] toSearch) {
-        
-        for (int i = 1; i <= 'z' - 'a' + 1; i++) {
-            int[] newArray = CharArrayOps.copyArray(array);
-            Crypto.decryptCeasar(newArray, i);
-            if ( CharArrayOps.find(newArray, toSearch) >= 0)
-                return i;
-        }
-        
-        return -1;
-        
+       // Bijektive-Verschlüsselung knacken
+       int[] bijectivKey = {
+               'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+               'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'
+       };
+       
+       Crypto.encryptBijective(input, bijectivKey);
+       
+       int[] bijectiveKey2 = bruteForceBijectivKey(input, toSearch);
+       
+       if (bijectiveKey2[0] >= 0) {
+           System.out.println("Der Schlüssel ist: ");
+           CharArrayOps.print(bijectiveKey2);
+       } else
+           System.out.println("Der Schlüssel konnte nicht ermittelt werden!");
+       
+       int[] test = CharArrayOps.copyArray(input);
+       Crypto.decryptBijective(test, bijectiveKey2);
+       CharArrayOps.print(test);
+       
+       System.out.println();
     }
     
     public static int[] bruteForceBijectivKey(int[] array, int[] toSearch) {
@@ -133,5 +111,4 @@ public class Eavesdropper {
         return new int[] {-1};
         
     }
-    
 }

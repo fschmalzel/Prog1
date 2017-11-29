@@ -1,4 +1,4 @@
-package teilA;
+package main;
 
 import java.io.IOException;
 

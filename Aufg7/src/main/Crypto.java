@@ -1,4 +1,4 @@
-package teilA;
+package main;
 
 public class Crypto {
     

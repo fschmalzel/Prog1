@@ -1,4 +1,4 @@
-package teilA;
+package main;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ public class CryptoTest {
         System.out.println(CharArrayOps.compare(input, backup) ? "Alles richtig!" : "Irgendwo ist ein Fehler unterlaufen!");
         
         
-        // Bijektive-Verschlüsselung
+        // EXOR-Verschlüsselung
         
         System.out.println("\nEXOR-Verschlüsselung:");
         
