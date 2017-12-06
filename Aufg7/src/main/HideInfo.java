@@ -56,14 +56,13 @@ public class HideInfo {
      * @return The new array without vocals
      */
     public static int[] part4(int[] array) {
-        
         array = CharArrayOps.delete(array, 'a');
         array = CharArrayOps.delete(array, 'e');
         array = CharArrayOps.delete(array, 'i');
         array = CharArrayOps.delete(array, 'o');
         array = CharArrayOps.delete(array, 'u');
         // https://de.wikipedia.org/wiki/Y
-        array = CharArrayOps.delete(array, 'y');
+        // array = CharArrayOps.delete(array, 'y');
         
         return array;
     }
