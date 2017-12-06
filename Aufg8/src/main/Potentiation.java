@@ -16,7 +16,7 @@ public class Potentiation {
         
         // a^n
         double a = 3;
-        long n = 89;
+        long n = 7;
         
         counter = 0;
         // O(n)

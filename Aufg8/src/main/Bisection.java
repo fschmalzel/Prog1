@@ -11,13 +11,13 @@ public class Bisection {
         
         i = 0;
         double nullPosition = bisectIterativly(lower, upper, epsilon);
-        System.out.println("Schleifendurchläufe: " + i);
-        System.out.println("Näherungsweise Nullstelle an " + nullPosition + " mit Wert " + f(nullPosition));
+        System.out.println("Näherungsweise Nullstelle an " + nullPosition +
+                " mit Wert " + f(nullPosition) + ". Schleifendurchläufe: " + i);
         
         i = 0;
         nullPosition = bisectRecursivly(lower, upper, epsilon);
-        System.out.println("Schleifendurchläufe: " + i);
-        System.out.println("Näherungsweise Nullstelle an " + nullPosition + " mit Wert " + f(nullPosition));
+        System.out.println("Näherungsweise Nullstelle an " + nullPosition +
+                " mit Wert " + f(nullPosition) + ". Schleifendurchläufe: " + i);
         
         
     }

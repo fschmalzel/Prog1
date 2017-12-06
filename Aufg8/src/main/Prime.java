@@ -11,10 +11,12 @@ public class Prime {
         long n = 80;
         long[] primes = findPrimes(n);
         System.out.println("Von der Stelle " + n + " aus wurden " + primes.length + " viele Primzahlen gefunden!");
-        for (long prime : primes) {
-            System.out.print(prime + " | ");
-        }
-        System.out.println();
+        
+        for (int i = 0; i < primes.length - 1; i++)
+            System.out.print(primes[i] + " | ");
+        
+        
+        System.out.println(primes[primes.length-1]);
         
 //        timeForFindPrimes(100, 10);
 //        timeForFindPrimes2(10);

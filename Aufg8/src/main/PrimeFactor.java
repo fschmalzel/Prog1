@@ -4,12 +4,14 @@ public class PrimeFactor {
 
     
     public static void main(String[] args) {
+        int number = 45765476;
         
-        int[] factors = primeFactors(45765476);
+        int[] factors = primeFactors(number);
         
-        for (int i = 0; i < factors.length - 1; i++) {
+        System.out.print("Primfaktorzerlegung von " + number + ": ");
+        
+        for (int i = 0; i < factors.length - 1; i++)
             System.out.print(factors[i] + " | ");
-        }
         
         System.out.println(factors[factors.length-1]);
         
