@@ -7,7 +7,7 @@ public class Bisection {
     public static void main(String[] args) {
         double lower = -10000;
         double upper = 10000;
-        double epsilon = 1;
+        double epsilon = 20;
         
         i = 0;
         double nullPosition = bisectIterativly(lower, upper, epsilon);
@@ -71,8 +71,8 @@ public class Bisection {
     }
     
     public static double f(double x) {
-        return Math.pow(x, 3) - 24 * Math.pow(x,2) + 59 * x + 420;
-//        return -1/Math.exp(x) + 1e20;
+//        return Math.pow(x, 3) - 24 * Math.pow(x,2) + 59 * x + 420;
+        return -1/Math.exp(x) + 1e20;
     }
     
     

@@ -3,7 +3,7 @@ package main;
 public class RecursivePattern {
 
     public static void main(String[] args) {
-        pattern(3);
+        pattern(4);
     }
 
     public static void pattern(int n) {

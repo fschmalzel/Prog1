@@ -15,8 +15,8 @@ public class Potentiation {
 //        System.out.println();
         
         // a^n
-        double a = 3;
-        long n = 7;
+        double a = 2;
+        long n = 256;
         
         counter = 0;
         // O(n)
@@ -103,6 +103,8 @@ public class Potentiation {
             return a;
         else if (n == 0)
             return 1;
+        
+        
         // Hier wird ein Zwischenergebnis berechnet, so dass wir potenzOpti nicht
         // zweimal mit den selben Parametern aufrufen müssen
         double zwischenErgebnis = potenzOptimized(a, n/2);
