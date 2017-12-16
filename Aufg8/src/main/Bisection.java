@@ -7,7 +7,7 @@ public class Bisection {
     public static void main(String[] args) {
         double lower = -10000;
         double upper = 10000;
-        double epsilon = 20;
+        double epsilon = 10000;
         
         i = 0;
         double nullPosition = bisectIterativly(lower, upper, epsilon);
