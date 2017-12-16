@@ -24,7 +24,8 @@ public class Car  {
         if (maxSpeed <= 0 || fuelTankCapacity <= 0)
             return null;
             
-        //TODO Check fuelEfficiency
+        if (!validFuelEfficiency(fuelEfficiency))
+            return null;
         
         return new Car(fuelTankCapacity, maxSpeed, fuelEfficiency);
         
@@ -134,6 +135,22 @@ public class Car  {
             updateState(time - lastTimestamp);
             lastTimestamp = time;
         } 
+    }
+    
+    private static boolean validFuelEfficiency(float[][] fuelEfficiency) {
+        if (fuelEfficiency.length != 2)
+            return false;
+        
+        if (fuelEfficiency[0].length != fuelEfficiency[1].length)
+            return false;
+        
+        for (int i = 0; i < fuelEfficiency[1].length; i++) {
+            if (fuelEfficiency[1][i] <= 0) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     public String toString() {
