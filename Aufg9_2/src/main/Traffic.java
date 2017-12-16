@@ -6,7 +6,8 @@ import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
-public class Traffic extends JFrame {  
+public class Traffic extends JFrame {
+    private static final long serialVersionUID = 1L;
     private Displayer displayer;
   
     public Traffic(Car car){  
@@ -31,6 +32,7 @@ public class Traffic extends JFrame {
 }
 
 class DisplayArea extends JPanel  {
+    private static final long serialVersionUID = 1L;
     private Car car;
     
     public DisplayArea(Car car)  {
