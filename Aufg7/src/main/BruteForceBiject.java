@@ -37,6 +37,7 @@ public class BruteForceBiject {
        System.out.println();
     }
     
+    @SuppressWarnings("unused")
     public static int[] bruteForceBijectivKey(int[] array, int[] toSearch) {
         
         int[] pattern = CharArrayOps.copyArray(toSearch);

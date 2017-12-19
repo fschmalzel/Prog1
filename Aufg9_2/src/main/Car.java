@@ -157,7 +157,8 @@ public class Car  {
         return "Motor: " + (motorOn ? "an" : "aus") + "\n"
                 + "Geschwindigkeit: " + speed + " von " + maxSpeed + " m/s\n"
                 + "Geschwindigkeit: " + speed/3.6f + " von " + maxSpeed/3.6f + " km/h\n"
-                + "Sprit: " + fuel + " / " + fuelTankCapacity + " Liter.";
+                + "Sprit: " + fuel + " / " + fuelTankCapacity + " Liter.\n"
+                + "Zurückgelegte Strecke: " + x + " Meter.";
         
     }
     
