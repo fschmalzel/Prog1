@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class CarTest  {  
     public static void main(String[] args) { 
-        Car car = Car.buildCar(80, 50, new float[][] {{30, 50, 100, 140},{3, 5, 6.8f, 9}});
+        Car car = Car.buildCar(80, 50, -10, new float[][] {{-10, 30, 50, 100, 140},{1.8f, 3, 5, 6.8f, 9}});
         
         Traffic traffic = new Traffic(car);
         traffic.setSize(1000, 200);
@@ -20,16 +20,15 @@ public class CarTest  {
             try {
                 input = System.in.read();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             
             switch(input) {
             case '.':
-                if (car.getMotorOn())
-                    car.stopMotor();
-                else
-                    car.startMotor();
+                car.startMotor();
+                break;
+            case ',':
+                car.stopMotor();
                 break;
             case '+':
                 car.setSpeed(car.getSpeed() + 1);
@@ -37,10 +36,10 @@ public class CarTest  {
             case '-':
                 car.setSpeed(car.getSpeed() - 1);
                 break;
-            case ',':
+            case 'r':
                 car.refuel(5);
                 break;
-            case 'o':
+            case 's':
                 System.out.println(car.toString());
                 break;
             }
