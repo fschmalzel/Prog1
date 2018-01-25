@@ -16,8 +16,8 @@ public class Car  {
     
     private Car(float fuelTankCapacity, float maxSpeed, float reverseMaxSpeed, float[][] fuelEfficiency) {
         this.fuelTankCapacity = fuelTankCapacity;
-        this.maxSpeed = maxSpeed;
-        this.maxReverseSpeed = reverseMaxSpeed;
+        this.maxSpeed = maxSpeed/3.6f;
+        this.maxReverseSpeed = reverseMaxSpeed/3.6f;
         this.fuelEfficiency = fuelEfficiency;
     }
     
@@ -134,21 +134,21 @@ public class Car  {
      * @return The maximum speed of the car in m/s
      */
     public float getMaxSpeed() {
-        return maxSpeed;
+        return maxSpeed*3.6f;
     }
     
     /**
      * @return The maximum reverse speed of the car in m/s
      */
     public float getMaxReverseSpeed() {
-        return maxReverseSpeed;
+        return maxReverseSpeed*3.6f;
     }
      
     /**
      * @return The current speed in m/s
      */
     public float getSpeed() {
-        return speed;
+        return speed*3.6f;
     }
     
     /**
@@ -157,6 +157,7 @@ public class Car  {
      * @param speed The new speed of the car
      */
     public void setSpeed(float speed) {
+        speed /= 3.6f;
         if (motorOn && speed <= maxSpeed && speed >= maxReverseSpeed) {
             // If the car is capable of the speed and the motor is running
             // we can update the speed
@@ -173,9 +174,9 @@ public class Car  {
         // Searching through the array and using the fuelUsage which is closest
         // to the current speed of the car
         int index = 0;
-        float diff = Math.abs(speed - fuelEfficiency[0][0]);
+        float diff = Math.abs(speed*3.6f - fuelEfficiency[0][0]);
         for (int i = 0; i < fuelEfficiency[0].length; i++) {
-            float newDiff = Math.abs(speed - fuelEfficiency[0][i]);
+            float newDiff = Math.abs(speed*3.6f - fuelEfficiency[0][i]);
             if (newDiff < diff) {
                 diff = newDiff;
                 index = i;
@@ -202,7 +203,7 @@ public class Car  {
         
         x += distance;
         
-        fuel -= currentFuelUsage * distance/100d;
+        fuel -= currentFuelUsage/100d * distance/1000d;
         
         if (fuel <= 0) {
             fuel = 0;
@@ -259,7 +260,7 @@ public class Car  {
     public String toString() {
         return "Motor: " + (motorOn ? "an" : "aus") + "\n"
                 + "Geschwindigkeit: " + speed + " von " + maxSpeed + " m/s\n"
-                + "Geschwindigkeit: " + speed/3.6f + " von " + maxSpeed/3.6f + " km/h\n"
+                + "Geschwindigkeit: " + speed*3.6f + " von " + maxSpeed*3.6f + " km/h\n"
                 + "Sprit: " + fuel + " / " + fuelTankCapacity + " Liter.\n"
                 + "Zurückgelegte Strecke: " + x + " Meter.";
         

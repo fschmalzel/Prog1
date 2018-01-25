@@ -4,7 +4,11 @@ import java.io.IOException;
 
 public class CarTest  {  
     public static void main(String[] args) { 
-        Car car = Car.buildCar(80, 50, -10, new float[][] {{-10, 30, 50, 100, 140},{1.8f, 3, 5, 6.8f, 9}});
+        Car car = Car.buildCar(80, 100, -10, new float[][] {
+            {-10, 10, 30, 50,    100,    140},
+            { 20, 20, 10,  8.5f,   6.8f,   8}});
+        
+//        Car car = Car.buildCar(80, 50, -10, new float[][] {{-10, 30, 50, 100, 140},{2000f, 1000, 800.5f, 600.8f, 800}});
         
         Traffic traffic = new Traffic(car);
         traffic.setSize(1000, 200);
@@ -67,6 +71,15 @@ public class CarTest  {
 //        car.setSpeed(30);
 //        Traffic.waitAWhile(1_000);
 //        car.stopMotor();
+        
+//        car.refuel(10);
+//        car.startMotor();
+//        car.setSpeed(20);
+//        
+//        while (true) {
+//            car.tick();
+//            Traffic.waitAWhile(1_000);
+//        }
         
     } 
 }
